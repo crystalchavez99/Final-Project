@@ -1,12 +1,18 @@
 package com.company.gamestore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-//table name invoice
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "invoice")
 public class Invoice {
-    //primary key, auto increment
-    //column name invoice_id
+    @Id
+    @Column(name = "invoice_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     //not null, 50 characters

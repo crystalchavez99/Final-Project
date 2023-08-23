@@ -1,12 +1,22 @@
 package com.company.gamestore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
-//table name t_shirt
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "t_shirt")
 public class TShirt {
-    //column name tshirt_id
-    //primary key auto increment
+    @Id
+    @Column(name = "tshirt_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     //not null, 20 char
@@ -19,7 +29,7 @@ public class TShirt {
     private String description;
 
     //not null, 5 total 2 after decimal
-    private String price;
+    private BigDecimal price;
 
     //not null
     private int quantity;
@@ -56,11 +66,11 @@ public class TShirt {
         this.description = description;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

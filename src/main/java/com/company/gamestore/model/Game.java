@@ -1,12 +1,18 @@
 package com.company.gamestore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-//table name game
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "game")
 public class Game {
-    //column name game_id
-    //primary key, auto increment
+    @Id
+    @Column(name = "game_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     //not null, 50 char
