@@ -36,7 +36,20 @@ public class Invoice {
 
     //column name item_id
     //not null, links to game console or t_shirt id
+    @Column(name = "item_id")
     private int itemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="item_id")
+    private Game game;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="item_id")
+    private Console console;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="item_id")
+    private TShirt tShirt;
 
     //column name unit_price
     //not null, 8 total, 2 after decimal
