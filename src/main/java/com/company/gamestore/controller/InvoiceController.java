@@ -16,11 +16,13 @@ public class InvoiceController {
     InvoiceRepository invoiceRepository;
 
     @GetMapping("/invoices")
+    @ResponseStatus(value = HttpStatus.OK)
     public List<Invoice> getAllInvoices() {
         return invoiceRepository.findAll();
     }
 
     @GetMapping("/invoices/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Invoice getInvoiceById(@PathVariable int id) {
         Optional<Invoice> returnVal = invoiceRepository.findById(id);
         if (returnVal.isPresent()) {
@@ -29,8 +31,8 @@ public class InvoiceController {
         return null;
     }
 
-    @GetMapping("/invoices/{name}")
-    public List<Invoice> getInvoiceById(@PathVariable String name) {
+    @GetMapping("/invoices/names/{name}")
+    public List<Invoice> getInvoiceByName(@PathVariable String name) {
         return invoiceRepository.findByName(name);
     }
 
