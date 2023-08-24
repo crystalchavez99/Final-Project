@@ -1,4 +1,4 @@
 package com.company.gamestore.repository;
 
-public class ConsoleRepository {
+public interface ConsoleRepository {
 }

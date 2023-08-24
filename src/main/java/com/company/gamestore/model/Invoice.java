@@ -2,61 +2,118 @@ package com.company.gamestore.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+import javax.validation.constraints.*;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "invoice")
-public class Invoice {
+public class Invoice implements Serializable {
+
+    // column name id
+    // not null
     @Id
     @Column(name = "invoice_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private int id;
 
+    // column name name
     //not null, 50 characters
+    @Column(name  = "name")
+    @NotNull(message= "Name cannot be null")
+    @Size(max = 50, message = "Cannot be more than 50 characters")
     private String name;
 
+    // column name street
     //not null, 100 char
+    @Column(name = "street")
+    @NotNull(message= "Street cannot be null")
+    @Size(max = 100, message = "Cannot be more than 100 characters")
     private String street;
 
+    // column name city
     //not null, 50 char
+    @Column(name = "city")
+    @NotNull(message= "City cannot be null")
+    @Size(max = 50, message = "Cannot be more than 50 characters")
     private String city;
 
+    // column name state
     //not null, 20 char
+    @Column(name = "state")
+    @NotNull(message= "State cannot be null")
+    @Size(max = 20, message = "Cannot be more than 20 characters")
     private String state;
 
+    // column name zipcode
     //not null, 10 char
+    @Column(name = "zipcode")
+    @NotNull(message= "Zipcode cannot be null")
+    @Size(max = 10, message = "Cannot be more than 10 characters")
     private String zipcode;
 
     //column name item_type
     //not null, 50 char
+    @Column(name = "item_type")
+    @NotNull(message= "itemType cannot be null")
+    @Size(max = 50, message = "Cannot be more than 50 characters")
     private String itemType;
 
     //column name item_id
     //not null, links to game console or t_shirt id
+    @Column(name = "item_id")
+    @NotNull(message= "Item ID cannot be null")
     private int itemId;
 
     //column name unit_price
     //not null, 8 total, 2 after decimal
+    @Column(name="unit_price")
+    @NotNull(message= "Unit Price cannot be null")
+    @Digits(integer = 6, fraction = 2, message = "Unit price has to no more than 8 digits long, and up 2 decimal places")
     private BigDecimal unitPrice;
 
+    // column name quantity
     //not null
+    @Column(name = "Quantity")
+    @NotNull(message= "Quantity cannot be null")
     private int quantity;
 
+    //column name subtotal
     //not null, 8 total, 2 after decimal
+    @Column(name = "subtotal")
+    @NotNull(message= "Subtotal cannot be null")
+    @Size(max = 50, message = "Subtotal has to no more than 8 digits long, and up 2 decimal places")
     private BigDecimal subtotal;
 
     //not null, 8 total, 2 after decimal
-    //based off rate from tax model?
+    //based off rate from tax model
+    @Column(name = "tax")
+    @NotNull(message= "Tax cannot be null")
+    @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
+    @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
+    @Size(max = 50, message = "Tax has to no more than 8 digits long, and up 2 decimal places")
     private BigDecimal tax;
 
     //column name processing_fee
     //not null, 8 total, 2 after decimal
+    @Column(name = "processing_fee")
+    @NotNull(message= "Processing Fee cannot be null")
+    @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
+    @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
+    @Size(max = 50, message = "Processing Fee has to no more than 8 digits long, and up 2 decimal places")
     private BigDecimal processingFee;
 
     //not null, 8 total, 2 after decimal
+    @Column(name = "total")
+    @NotNull(message= "Total cannot be null")
+    @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
+    @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
+    @Size(max = 50, message = "Total has to no more than 8 digits long, and up 2 decimal places")
     private BigDecimal total;
 
     public int getId() {
