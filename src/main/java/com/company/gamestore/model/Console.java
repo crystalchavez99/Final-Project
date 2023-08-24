@@ -1,5 +1,6 @@
 package com.company.gamestore.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -7,6 +8,9 @@ import java.util.Objects;
 public class Console {
     //column name console_id
     //primary key auto increment
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "console_id")
     private int id;
 
     //not null, 50 char
