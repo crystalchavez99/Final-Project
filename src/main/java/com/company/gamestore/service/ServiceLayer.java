@@ -105,6 +105,17 @@ public class ServiceLayer {
 
         invoiceRepository.save(invoice);
 
+        if(itemType.equals("console")){
+            consoleItem.setQuantity(consoleItem.getQuantity() - invoice.getQuantity());
+            consoleRepository.save(consoleItem);
+        }else  if(itemType.equals("game")) {
+            gameItem.setQuantity(gameItem.getQuantity() - invoice.getQuantity());
+            gameRepository.save(gameItem);
+        }else  if(itemType.equals("tshirt")) {
+            tshirtItem.setQuantity(tshirtItem.getQuantity() - invoice.getQuantity());
+            tShirtRepository.save(tshirtItem);
+        }
+
         return invoice;
     }
 
