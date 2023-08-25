@@ -79,7 +79,7 @@ public class Invoice implements Serializable {
 
     // column name quantity
     //not null
-    @Column(name = "Quantity")
+    @Column(name = "quantity")
     @NotNull(message= "Quantity cannot be null")
     private int quantity;
 
