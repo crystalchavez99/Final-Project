@@ -3,6 +3,7 @@ package com.company.gamestore.controller;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
 import com.company.gamestore.service.ServiceLayer;
+import com.company.gamestore.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +44,20 @@ public class InvoiceController {
 
     @PostMapping("/invoices")
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody @Valid Invoice invoice) {
-        Invoice newInvoice = invoiceServiceLayer.saveInvoice(invoice);
+    public Invoice createInvoice(@RequestBody @Valid InvoiceViewModel invoiceViewModel) {
+        Invoice invoice = new Invoice();
+        invoice.setName(invoiceViewModel.getName());
+        invoice.setStreet(invoiceViewModel.getStreet());
+        invoice.setCity(invoiceViewModel.getCity());
+        invoice.setState(invoiceViewModel.getState());
+        invoice.setZipcode(invoiceViewModel.getZipcode());
+        invoice.setItemType(invoiceViewModel.getItemType());
+        invoice.setItemId(invoiceViewModel.getItemId());
+        invoice.setQuantity(invoiceViewModel.getQuantity());
 
-        return newInvoice;
+        Invoice saveInvoice = invoiceServiceLayer.saveInvoice(invoice);
+
+
+        return saveInvoice;
     }
 }
