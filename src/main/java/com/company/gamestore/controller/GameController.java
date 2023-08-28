@@ -60,7 +60,7 @@ public class GameController {
     //read game by esrb rating
     @GetMapping("/games/rating/{esrbRating}")
     public List<Game> getGamesByRating(@PathVariable String esrbRating) {
-        return gameRepository.findByRating(esrbRating);
+        return gameRepository.findByEsrbRating(esrbRating);
     }
 
     //read game by title

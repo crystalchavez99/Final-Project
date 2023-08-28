@@ -25,12 +25,16 @@ public class ServiceLayer {
             ConsoleRepository consoleRepository,
             GameRepository gameRepository,
             InvoiceRepository invoiceRepository,
-            TShirtRepository tShirtRepository
+            TShirtRepository tShirtRepository,
+            TaxRepository taxRepository,
+            FeeRepository feeRepository
     ){
     this.consoleRepository = consoleRepository;
     this.gameRepository = gameRepository;
     this.invoiceRepository = invoiceRepository;
     this.tShirtRepository = tShirtRepository;
+    this.feeRepository = feeRepository;
+    this.taxRepository = taxRepository;
     }
 
     @Transactional
@@ -80,7 +84,9 @@ public class ServiceLayer {
         }
 
         Optional<Fee> fee = feeRepository.findById(invoice.getItemType());
+
         BigDecimal invoiceFee = fee.get().getFee();
+        System.out.println(itemType + " " + fee + invoiceFee + "YAYAYAYA");
         if(invoice.getQuantity() > 10){
             invoice.setProcessingFee(invoiceFee.add(new BigDecimal(15.49)));
         }else{
