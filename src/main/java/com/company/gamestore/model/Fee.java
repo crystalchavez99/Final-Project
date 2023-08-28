@@ -1,16 +1,35 @@
 package com.company.gamestore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "fee")
 public class Fee {
     //primary key
     //column name product_type
+    @Id
+    @Column(name = "product_type")
+    @Size(max = 50, message = "Product type can not be more than 50.")
     private String productType;
 
     //not null
     //8 numbers total, 2 after decimal
     //000000.00
+    @NotNull(message = "Fee can not be null.")
+    @DecimalMin(value = "0.00", inclusive = true, message = "Fee can not be null and must be over 0.00")
+    @Digits(integer = 6, fraction = 2, message = "Tax can only be up to 8 numbers long with 2 numbers after the decimal.")
     private BigDecimal fee;
 
     public String getProductType() {
