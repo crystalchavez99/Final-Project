@@ -84,7 +84,7 @@ public class GameRepositoryTest {
 
     @Test
     void shouldFindGameByRating() {
-        List<Game> game2 = gameRepository.findByRating(game.getEsrbRating());
+        List<Game> game2 = gameRepository.findByEsrbRating(game.getEsrbRating());
         assertEquals(1, game2.size());
     }
 
