@@ -1,6 +1,7 @@
 package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Game;
+import com.company.gamestore.controller.GameController;
 import com.company.gamestore.repository.GameRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,8 +44,6 @@ public class GameControllerTest {
         game.setPrice(decimal.round(mc));
         game.setStudio("Amusement Vision");
         game.setQuantity(5);
-
-        game = gameRepository.save(game);
     }
 
     @Test

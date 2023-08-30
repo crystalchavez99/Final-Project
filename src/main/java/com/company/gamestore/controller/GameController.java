@@ -1,11 +1,11 @@
 package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Game;
-import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +59,7 @@ public class GameController {
 
     //read game by esrb rating
     @GetMapping("/games/rating/{esrbRating}")
-    public List<Game> getGamesByRating(@PathVariable String esrbRating) {
+    public List<Game> getGamesByEsrbRating(@PathVariable String esrbRating) {
         return gameRepository.findByEsrbRating(esrbRating);
     }
 
