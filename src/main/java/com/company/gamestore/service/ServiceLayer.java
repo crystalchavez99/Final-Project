@@ -125,4 +125,8 @@ public class ServiceLayer {
         return invoice;
     }
 
+    public void deleteAll() {
+        invoiceRepository.deleteAll();
+    }
+
 }
