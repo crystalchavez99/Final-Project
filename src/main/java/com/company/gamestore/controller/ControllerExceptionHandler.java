@@ -19,7 +19,7 @@ import java.util.List;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<List<CustomErrorResponse>> recordValidationError(MethodArgumentNotValidException e){
         // binding result holds the validation errors
         BindingResult result = e.getBindingResult();
@@ -30,13 +30,6 @@ public class ControllerExceptionHandler {
         List<CustomErrorResponse> errorResponseList = new ArrayList<>();
 
         for(FieldError fieldError : fieldErrors) {
-            CustomErrorResponse errorResponse = new CustomErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), fieldError.getDefaultMessage());
-            errorResponse.setTimestamp(LocalDateTime.now());
-            errorResponse.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
-            errorResponseList.add(errorResponse);
-        }
-
-        for(FieldError fieldError : fieldErrors) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(HttpStatus.NOT_FOUND.toString(), fieldError.getDefaultMessage());
             errorResponse.setTimestamp(LocalDateTime.now());
             errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
@@ -44,7 +37,7 @@ public class ControllerExceptionHandler {
         }
 
         // create and return ResponseEntity
-        ResponseEntity<List<CustomErrorResponse>> responseEntity = new ResponseEntity<>(errorResponseList, HttpStatus.UNPROCESSABLE_ENTITY);
+        ResponseEntity<List<CustomErrorResponse>> responseEntity = new ResponseEntity<>(errorResponseList, HttpStatus.NOT_FOUND);
         return responseEntity;
 
     }

@@ -21,7 +21,6 @@ public class Game {
 
     //not null, 50 char
     @Column(name = "title")
-    @NotNull(message= "title cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for title.")
     private String title;
@@ -29,14 +28,12 @@ public class Game {
     //table name esrb_rating
     //not null, 50 char
     @Column(name = "esrb_rating")
-    @NotNull(message= "esrbRating cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for esrbRating.")
     private String esrbRating;
 
     //not null, 255 char
     @Column(name = "description")
-    @NotNull(message= "description cannot be null")
     @Size(max = 255, message = "Cannot be more than 255 characters")
     @NotEmpty(message = "You must supply a value for description.")
     private String description;
@@ -49,7 +46,6 @@ public class Game {
 
     //not null, 50 char
     @Column(name = "studio")
-    @NotNull(message= "studio cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for studio.")
     private String studio;

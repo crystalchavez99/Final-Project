@@ -24,19 +24,16 @@ public class TShirt {
     private int id;
 
     //not null, 20 char
-    @NotNull(message= "size cannot be null")
     @Size(max = 20, message = "Cannot be more than 20 characters")
     @NotEmpty(message = "You must supply a value for size.")
     private String size;
 
     //not null, 20 char
-    @NotNull(message= "color cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for color.")
     private String color;
 
     //not null, 255 char
-    @NotNull(message= "description cannot be null")
     @Size(max = 255, message = "Cannot be more than 255 characters")
     @NotEmpty(message = "You must supply a value for description.")
     private String description;

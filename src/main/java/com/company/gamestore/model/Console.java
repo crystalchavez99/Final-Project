@@ -23,20 +23,17 @@ public class Console {
     private int id;
 
     //not null, 50 char
-    @NotNull(message= "model cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for model.")
     private String model;
 
     //not null, 50 char
-    @NotNull(message= "manufacturer cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for manufacturer.")
     private String manufacturer;
 
     //column name memory_amount
     //20 char
-    @NotNull(message= "title cannot be memoryAmount")
     @Size(max = 20, message = "Cannot be more than 20 characters")
     @NotEmpty(message = "You must supply a value for memoryAmount.")
     private String memoryAmount;

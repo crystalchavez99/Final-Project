@@ -113,4 +113,20 @@ public class GameControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void shouldReturn422ErrorCode() throws Exception {
+        game = new Game();
+
+        BigDecimal decimal = new BigDecimal("24.99");
+        MathContext mc = new MathContext(4);
+
+        game.setTitle("Super Monkey Ball");
+        game.setEsrbRating("Everyone");
+        game.setDescription("Call your friends and warn your neighbors, it's time to have a ball! Go bananas with 90+ stages, multi-player madness, and 7 cool ways to play! Equal parts \"party\" and \"game\", Super Monkey Ball could be the most \"well-rounded\" game you've ever played!");
+        game.setPrice(decimal.round(mc));
+        game.setStudio("Amusement Vision");
+        game.setQuantity(5);
+
+    }
 }

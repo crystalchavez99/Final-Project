@@ -25,7 +25,6 @@ public class Invoice implements Serializable {
     // column name name
     //not null, 50 characters
     @Column(name  = "name")
-    @NotNull(message= "Name cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for name.")
     private String name;
@@ -33,7 +32,6 @@ public class Invoice implements Serializable {
     // column name street
     //not null, 100 char
     @Column(name = "street")
-    @NotNull(message= "Street cannot be null")
     @Size(max = 100, message = "Cannot be more than 100 characters")
     @NotEmpty(message = "You must supply a value for street.")
     private String street;
@@ -41,7 +39,6 @@ public class Invoice implements Serializable {
     // column name city
     //not null, 50 char
     @Column(name = "city")
-    @NotNull(message= "City cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for city.")
     private String city;
@@ -49,7 +46,6 @@ public class Invoice implements Serializable {
     // column name state
     //not null, 20 char
     @Column(name = "state")
-    @NotNull(message= "State cannot be null")
     @Size(max = 20, message = "Cannot be more than 20 characters")
     @NotEmpty(message = "You must supply a value for state.")
     private String state;
@@ -57,7 +53,6 @@ public class Invoice implements Serializable {
     // column name zipcode
     //not null, 10 char
     @Column(name = "zipcode")
-    @NotNull(message= "Zipcode cannot be null")
     @Size(max = 10, message = "Cannot be more than 10 characters")
     @NotEmpty(message = "You must supply a value for zipcode.")
     private String zipcode;
@@ -65,7 +60,6 @@ public class Invoice implements Serializable {
     //column name item_type
     //not null, 50 char
     @Column(name = "item_type")
-    @NotNull(message= "itemType cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for itemType.")
     private String itemType;
