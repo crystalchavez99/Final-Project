@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -128,5 +129,17 @@ public class ServiceLayer {
     public void deleteAll() {
         invoiceRepository.deleteAll();
     }
+    public List<Invoice> findAll() {
+        return invoiceRepository.findAll();
+    }
+    public Invoice findById(int invoiceId) {
+        Optional<Invoice> res = invoiceRepository.findById(invoiceId);
+        return res.isPresent() ? res.get() : null;
+    }
+
+    public List<Invoice> findByName(String name) {
+        return invoiceRepository.findByName(name);
+    }
+
 
 }

@@ -16,8 +16,7 @@ import java.util.Optional;
 @RestController
 public class InvoiceController {
 
-    @Autowired
-    InvoiceRepository invoiceRepository;
+
 
     @Autowired
     ServiceLayer invoiceServiceLayer;
@@ -25,22 +24,18 @@ public class InvoiceController {
     @GetMapping("/invoices")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
+        return invoiceServiceLayer.findAll();
     }
 
     @GetMapping("/invoices/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Invoice getInvoiceById(@PathVariable int id) {
-        Optional<Invoice> returnVal = invoiceRepository.findById(id);
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        }
-        return null;
+        return invoiceServiceLayer.findById(id);
     }
 
     @GetMapping("/invoices/names/{name}")
     public List<Invoice> getInvoiceByName(@PathVariable String name) {
-        return invoiceRepository.findByName(name);
+        return invoiceServiceLayer.findByName(name);
     }
 
     @PostMapping("/invoices")

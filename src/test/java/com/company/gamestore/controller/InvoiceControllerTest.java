@@ -1,11 +1,16 @@
 package com.company.gamestore.controller;
 
-import com.company.gamestore.model.*;
-import com.company.gamestore.repository.*;
+import com.company.gamestore.model.Fee;
+import com.company.gamestore.model.Invoice;
+import com.company.gamestore.model.TShirt;
+import com.company.gamestore.model.Tax;
+import com.company.gamestore.repository.FeeRepository;
+import com.company.gamestore.repository.TShirtRepository;
+import com.company.gamestore.repository.TaxRepository;
 import com.company.gamestore.service.ServiceLayer;
 import com.company.gamestore.viewmodel.InvoiceViewModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +21,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
-
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.*;
+
+@RunWith(SpringRunner.class)
 @WebMvcTest(InvoiceController.class)
-public class InvoiceControllerTest {
+class InvoiceControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ServiceLayer serviceLayer;
+    private ServiceLayer invoiceServiceLayer;
 
     @MockBean
     private TaxRepository taxRepository;
@@ -47,17 +52,35 @@ public class InvoiceControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void createInvoice() throws Exception{
-        Fee fee = new Fee();
+    void getAllInvoices() throws Exception {
+        mockMvc.perform(get("/invoices"))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    void getInvoiceById() throws Exception {
+        mockMvc.perform(get("/invoices/1"))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    void getInvoiceByName() throws Exception {
+        mockMvc.perform(get("/invoices/names/John Doe"))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    void createInvoice() throws Exception {
         Tax tax = new Tax();
+        Fee fee = new Fee();
         TShirt tshirt = new TShirt();
 
         fee.setProductType("tshirt");
         fee.setFee(BigDecimal.valueOf(.99));
         when(feeRepository.findById(fee.getProductType())).thenReturn(Optional.of(fee));
 
-        tax.setState("CA");
-        tax.setRate(BigDecimal.valueOf(.06));
+        tax.setState("OR");
+        tax.setRate(BigDecimal.valueOf(.075));
         when(taxRepository.findById(tax.getState())).thenReturn(Optional.of(tax));
 
         tshirt.setColor("red");
@@ -82,34 +105,9 @@ public class InvoiceControllerTest {
 
         String inputJson = mapper.writeValueAsString(invoiceViewModel);
 
-        mockMvc.perform(
-                post("/invoices").
-                        content(inputJson).contentType(MediaType.APPLICATION_JSON)
-        ).andDo(print())
+        mockMvc.perform(post("/invoices").content(inputJson).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isCreated());
-    }
 
-    //read all
-    @Test
-    void shouldGetAllInvoices() throws Exception {
-        mockMvc.perform(get("/invoices"))
-                .andDo(print())
-                .andExpect(status().isOk());
     }
-    //read by id
-    @Test
-    void shouldGetInvoiceById() throws Exception {
-        mockMvc.perform(get("/invoices/3"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-    //read by name
-    @Test
-    void shouldGetInvoicesByCustomerName() throws Exception {
-        mockMvc.perform(get("/invoices/name/Shawn+Haven"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-
 }
