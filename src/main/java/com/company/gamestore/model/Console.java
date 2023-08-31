@@ -3,10 +3,8 @@ package com.company.gamestore.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -14,118 +12,130 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "console")
-public class Console {
-    //column name console_id
-    //primary key auto increment
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "console_id")
-    private int id;
+public class Console implements Serializable {
 
-    //not null, 50 char
-    @NotNull(message= "model cannot be null")
-    @Size(max = 50, message = "Cannot be more than 50 characters")
-    @NotEmpty(message = "You must supply a value for model.")
+
+    @Id
+    @Column(name = "console_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull(message = "Console_id cannot be null.")
+    private Integer consoleId;
+
+    @NotNull(message = "Model cannot be null.")
+    @Size(max = 50, message = "Model can not be larger than 50 characters.")
     private String model;
 
-    //not null, 50 char
-    @NotNull(message= "manufacturer cannot be null")
-    @Size(max = 50, message = "Cannot be more than 50 characters")
-    @NotEmpty(message = "You must supply a value for manufacturer.")
+    @NotNull(message = "Manufacturer cannot be null.")
+    @Size(max = 50, message = "Manufacturer can not be larger than 50 characters.")
     private String manufacturer;
 
-    //column name memory_amount
-    //20 char
-    @NotNull(message= "title cannot be memoryAmount")
-    @Size(max = 20, message = "Cannot be more than 20 characters")
-    @NotEmpty(message = "You must supply a value for memoryAmount.")
+    @Column(name = "memory_amount")
+    @Size(max = 20, message = "Memory Amount can not be larger than 20 characters.")
     private String memoryAmount;
 
-    //20 char
-    @Size(max = 20, message = "Cannot be more than 20 characters")
+    @Size(max = 20, message = "Processor can not be larger than 20 characters.")
     private String processor;
 
-    //not null, 5 total 2 after decimal
-    @NotNull(message= "price cannot be null")
-    @Digits(integer = 3, fraction = 2, message = "price has to no more than 5 digits long, and up 2 decimal places")
+    @NotNull(message = "Price cannot be null.")
+    @DecimalMax(value = "999.99", inclusive = true, message = "Price must be less than 1,000.00")
+    @DecimalMin(value = "0.00", inclusive = true, message = "Price cannot be less than 0.00")
     private BigDecimal price;
 
-    //not null
-    private int quantity;
+    @NotNull(message = "Quantity cannot be null.")
+    @Max(value = 999, message = "You can only order less than 1000 consoles")
+    @Min(value = 0, message = "You cannot have negative consoles")
+    private Integer quantity;
 
-    public int getId() {
-        return id;
+
+    public Integer getConsoleId() {
+        return consoleId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+
+    public void setId(Integer consoleId) {
+        this.consoleId = consoleId;
     }
+
 
     public String getModel() {
         return model;
     }
 
+
     public void setModel(String model) {
         this.model = model;
     }
+
 
     public String getManufacturer() {
         return manufacturer;
     }
 
+
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
+
 
     public String getMemoryAmount() {
         return memoryAmount;
     }
 
+
     public void setMemoryAmount(String memoryAmount) {
         this.memoryAmount = memoryAmount;
     }
+
 
     public String getProcessor() {
         return processor;
     }
 
+
     public void setProcessor(String processor) {
         this.processor = processor;
     }
+
 
     public BigDecimal getPrice() {
         return price;
     }
 
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getQuantity() {
+
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Console console = (Console) o;
-        return id == console.id && quantity == console.quantity && model.equals(console.model) && manufacturer.equals(console.manufacturer) && Objects.equals(memoryAmount, console.memoryAmount) && Objects.equals(processor, console.processor) && price.equals(console.price);
+        return Objects.equals(getConsoleId(), console.getConsoleId()) && Objects.equals(getModel(), console.getModel()) && Objects.equals(getManufacturer(), console.getManufacturer()) && Objects.equals(getMemoryAmount(), console.getMemoryAmount()) && Objects.equals(getProcessor(), console.getProcessor()) && Objects.equals(getPrice(), console.getPrice()) && Objects.equals(getQuantity(), console.getQuantity());
     }
+
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, model, manufacturer, memoryAmount, processor, price, quantity);
+        return Objects.hash(getConsoleId(), getModel(), getManufacturer(), getMemoryAmount(), getProcessor(), getPrice(), getQuantity());
     }
+
 
     @Override
     public String toString() {
-        return "TShirt{" +
-                "id=" + id +
+        return "Console{" +
+                "consoleId=" + consoleId +
                 ", model='" + model + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", memoryAmount='" + memoryAmount + '\'' +
