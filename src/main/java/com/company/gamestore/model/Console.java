@@ -3,6 +3,10 @@ package com.company.gamestore.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -19,19 +23,31 @@ public class Console {
     private int id;
 
     //not null, 50 char
+    @NotNull(message= "model cannot be null")
+    @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for model.")
     private String model;
 
     //not null, 50 char
+    @NotNull(message= "manufacturer cannot be null")
+    @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for manufacturer.")
     private String manufacturer;
 
     //column name memory_amount
     //20 char
+    @NotNull(message= "title cannot be memoryAmount")
+    @Size(max = 20, message = "Cannot be more than 20 characters")
+    @NotEmpty(message = "You must supply a value for memoryAmount.")
     private String memoryAmount;
 
     //20 char
+    @Size(max = 20, message = "Cannot be more than 20 characters")
     private String processor;
 
     //not null, 5 total 2 after decimal
+    @NotNull(message= "price cannot be null")
+    @Digits(integer = 3, fraction = 2, message = "price has to no more than 5 digits long, and up 2 decimal places")
     private BigDecimal price;
 
     //not null

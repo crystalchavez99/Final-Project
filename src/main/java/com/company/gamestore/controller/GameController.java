@@ -41,7 +41,7 @@ public class GameController {
     //update game
     @PutMapping("/games")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGame(@RequestBody @Valid Game game) {
+    public void updateGame(@RequestBody Game game) {
         gameRepository.save(game);
     }
 

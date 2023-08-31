@@ -45,7 +45,6 @@ public class Game {
     @Column(name = "price")
     @NotNull(message= "price cannot be null")
     @Digits(integer = 3, fraction = 2, message = "price has to no more than 5 digits long, and up 2 decimal places")
-    @NotEmpty(message = "You must supply a value for price.")
     private BigDecimal price;
 
     //not null, 50 char

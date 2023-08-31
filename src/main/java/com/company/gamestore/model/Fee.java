@@ -27,7 +27,6 @@ public class Fee {
     @NotNull(message = "Fee can not be null.")
     @DecimalMin(value = "0.00", inclusive = true, message = "Fee can not be null and must be over 0.00")
     @Digits(integer = 6, fraction = 2, message = "Tax can only be up to 8 numbers long with 2 numbers after the decimal.")
-    @NotEmpty(message = "You must supply a value for fee.")
     private BigDecimal fee;
 
     public String getProductType() {
