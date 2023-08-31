@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Console;
 import com.company.gamestore.model.Game;
 import com.company.gamestore.controller.GameController;
 import com.company.gamestore.repository.GameRepository;
@@ -15,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,7 +75,7 @@ public class GameControllerTest {
     }
 
     @Test
-    void updateGame() throws Exception {
+    void shouldUpdateGame() throws Exception {
         game.setTitle("Super Monkey Ball 2");
         String inputJson = mapper.writeValueAsString(game);
 
@@ -84,7 +87,7 @@ public class GameControllerTest {
     }
 
     @Test
-    void deleteGameById() throws Exception {
+    void shouldDeleteGameById() throws Exception {
         mockMvc.perform(delete("/games/1"))
                 .andDo(print())
                 .andExpect(status().isNoContent());
