@@ -33,6 +33,8 @@ public class Tax implements Serializable {
     @Digits(integer = 5, fraction = 3, message = "Tax can only be up to 8 numbers long with 3 numbers after the decimal.")
     private BigDecimal rate;
 
+
+
     public String getState() {
         return state;
     }

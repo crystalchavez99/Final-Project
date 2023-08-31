@@ -6,6 +6,7 @@ import com.company.gamestore.service.ServiceLayer;
 import com.company.gamestore.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,8 +16,7 @@ import java.util.Optional;
 @RestController
 public class InvoiceController {
 
-    @Autowired
-    InvoiceRepository invoiceRepository;
+
 
     @Autowired
     ServiceLayer invoiceServiceLayer;
@@ -24,22 +24,18 @@ public class InvoiceController {
     @GetMapping("/invoices")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
+        return invoiceServiceLayer.findAll();
     }
 
     @GetMapping("/invoices/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Invoice getInvoiceById(@PathVariable int id) {
-        Optional<Invoice> returnVal = invoiceRepository.findById(id);
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        }
-        return null;
+        return invoiceServiceLayer.findById(id);
     }
 
     @GetMapping("/invoices/names/{name}")
     public List<Invoice> getInvoiceByName(@PathVariable String name) {
-        return invoiceRepository.findByName(name);
+        return invoiceServiceLayer.findByName(name);
     }
 
     @PostMapping("/invoices")

@@ -1,102 +1,113 @@
 package com.company.gamestore.controller;
 
-import com.company.gamestore.model.Game;
+import com.company.gamestore.model.Fee;
 import com.company.gamestore.model.Invoice;
-import com.company.gamestore.repository.GameRepository;
-import com.company.gamestore.repository.InvoiceRepository;
+import com.company.gamestore.model.TShirt;
+import com.company.gamestore.model.Tax;
+import com.company.gamestore.repository.FeeRepository;
+import com.company.gamestore.repository.TShirtRepository;
+import com.company.gamestore.repository.TaxRepository;
+import com.company.gamestore.service.ServiceLayer;
+import com.company.gamestore.viewmodel.InvoiceViewModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
+import java.util.Optional;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+@RunWith(SpringRunner.class)
 @WebMvcTest(InvoiceController.class)
-public class InvoiceControllerTest {
-    @MockBean
-    private InvoiceRepository invoiceRepository;
-    private GameRepository gameRepository;
+class InvoiceControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    private Invoice invoice;
-    private Game game;
+    @MockBean
+    private ServiceLayer invoiceServiceLayer;
 
-    ObjectMapper mapper = new ObjectMapper();
+    @MockBean
+    private TaxRepository taxRepository;
 
-    @BeforeEach
-    public void setUp() throws Exception{
-        game = new Game();
-        BigDecimal gameDecimal = new BigDecimal(24.99);
-        MathContext mc = new MathContext(4);
-        game.setTitle("Super Monkey Ball");
-        game.setEsrbRating("Everyone");
-        game.setDescription("Call your friends and warn your neighbors, it's time to have a ball! Go bananas with 90+ stages, multi-player madness, and 7 cool ways to play! Equal parts \"party\" and \"game\", Super Monkey Ball could be the most \"well-rounded\" game you've ever played!");
-        game.setPrice(gameDecimal.round(mc));
-        game.setStudio("Amusement Vision");
-        game.setQuantity(5);
-        game = gameRepository.save(game);
+    @MockBean
+    private FeeRepository feeRepository;
 
-        invoice = new Invoice();
-        invoice.setName("John Doe");
-        invoice.setStreet("1234 Street Name");
-        invoice.setCity("City Name");
-        invoice.setState("California");
-        invoice.setZipcode("00000");
-        invoice.setItemType("game");
-        invoice.setItemId(game.getId());
-        invoice.setUnitPrice(game.getPrice());
-        invoice.setQuantity(5);
-        //invoice.setSubtotal();
-        //invoice.setTax();
-        //invoice.setProcessingFee();
-        //invoice.setTotal();
+    @MockBean
+    private TShirtRepository tShirtRepository;
+    private ObjectMapper mapper = new ObjectMapper();
 
-        invoice = invoiceRepository.save(invoice);
-    }
-
-    //read all
     @Test
-    void shouldGetAllInvoices() throws Exception {
+    void getAllInvoices() throws Exception {
         mockMvc.perform(get("/invoices"))
-                .andDo(print())
-                .andExpect(status().isOk());
+                .andDo(print()).andExpect(status().isOk());
     }
-    //read by id
+
     @Test
-    void shouldGetGameById() throws Exception {
+    void getInvoiceById() throws Exception {
         mockMvc.perform(get("/invoices/1"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-    //read by name
-    @Test
-    void shouldGetGameByTitle() throws Exception {
-        mockMvc.perform(get("/invoices/name/John+Doe"))
-                .andDo(print())
-                .andExpect(status().isOk());
+                .andDo(print()).andExpect(status().isOk());
     }
 
-    //create
     @Test
-    void shouldCreateInvoice() throws Exception {
-        String input = mapper.writeValueAsString(game);
+    void getInvoiceByName() throws Exception {
+        mockMvc.perform(get("/invoices/names/John Doe"))
+                .andDo(print()).andExpect(status().isOk());
+    }
 
-        mockMvc.perform(post("/invoices")
-                        .content(input)
-                        .contentType(MediaType.APPLICATION_JSON))
+    @Test
+    void createInvoice() throws Exception {
+        Tax tax = new Tax();
+        Fee fee = new Fee();
+        TShirt tshirt = new TShirt();
+
+        fee.setProductType("tshirt");
+        fee.setFee(BigDecimal.valueOf(.99));
+        when(feeRepository.findById(fee.getProductType())).thenReturn(Optional.of(fee));
+
+        tax.setState("OR");
+        tax.setRate(BigDecimal.valueOf(.075));
+        when(taxRepository.findById(tax.getState())).thenReturn(Optional.of(tax));
+
+        tshirt.setColor("red");
+        tshirt.setDescription("coca-cola shirt");
+
+        tshirt.setPrice(BigDecimal.valueOf(12L, 2));
+
+        tshirt.setSize("medium");
+        tshirt.setQuantity(100);
+        when(tShirtRepository.findById(tshirt.getId())).thenReturn(Optional.of(tshirt));
+
+        InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
+
+        invoiceViewModel.setName("Shawn Haven");
+        invoiceViewModel.setStreet("420 Happy Ave");
+        invoiceViewModel.setCity("Lakewood");
+        invoiceViewModel.setState(tax.getState());
+        invoiceViewModel.setZipcode("91387");
+        invoiceViewModel.setItemType("tshirt");
+        invoiceViewModel.setItemId(tshirt.getId());
+        invoiceViewModel.setQuantity(10);
+
+        String inputJson = mapper.writeValueAsString(invoiceViewModel);
+
+        mockMvc.perform(post("/invoices").content(inputJson).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
+
     }
 }
