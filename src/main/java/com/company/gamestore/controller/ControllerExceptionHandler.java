@@ -36,6 +36,13 @@ public class ControllerExceptionHandler {
             errorResponseList.add(errorResponse);
         }
 
+        for(FieldError fieldError : fieldErrors) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(HttpStatus.NOT_FOUND.toString(), fieldError.getDefaultMessage());
+            errorResponse.setTimestamp(LocalDateTime.now());
+            errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+            errorResponseList.add(errorResponse);
+        }
+
         // create and return ResponseEntity
         ResponseEntity<List<CustomErrorResponse>> responseEntity = new ResponseEntity<>(errorResponseList, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;

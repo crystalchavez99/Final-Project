@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ public class Game {
     @Column(name = "title")
     @NotNull(message= "title cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for title.")
     private String title;
 
     //table name esrb_rating
@@ -29,24 +31,28 @@ public class Game {
     @Column(name = "esrb_rating")
     @NotNull(message= "esrbRating cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for esrbRating.")
     private String esrbRating;
 
     //not null, 255 char
     @Column(name = "description")
     @NotNull(message= "description cannot be null")
     @Size(max = 255, message = "Cannot be more than 255 characters")
+    @NotEmpty(message = "You must supply a value for description.")
     private String description;
 
     //not null, 5 total, 2 after decimal
     @Column(name = "price")
     @NotNull(message= "price cannot be null")
     @Digits(integer = 3, fraction = 2, message = "price has to no more than 5 digits long, and up 2 decimal places")
+    @NotEmpty(message = "You must supply a value for price.")
     private BigDecimal price;
 
     //not null, 50 char
     @Column(name = "studio")
     @NotNull(message= "studio cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for studio.")
     private String studio;
 
     //can be null? ask abt this one

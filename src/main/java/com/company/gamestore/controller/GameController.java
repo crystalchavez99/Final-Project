@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class GameController {
     //create game
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
-    public Game createGame(@RequestBody Game game) {
+    public Game createGame(@RequestBody @Valid Game game) {
         return gameRepository.save(game);
     }
 
@@ -40,7 +41,7 @@ public class GameController {
     //update game
     @PutMapping("/games")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGame(@RequestBody Game game) {
+    public void updateGame(@RequestBody @Valid Game game) {
         gameRepository.save(game);
     }
 

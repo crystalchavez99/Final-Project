@@ -27,6 +27,7 @@ public class Invoice implements Serializable {
     @Column(name  = "name")
     @NotNull(message= "Name cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for name.")
     private String name;
 
     // column name street
@@ -34,6 +35,7 @@ public class Invoice implements Serializable {
     @Column(name = "street")
     @NotNull(message= "Street cannot be null")
     @Size(max = 100, message = "Cannot be more than 100 characters")
+    @NotEmpty(message = "You must supply a value for street.")
     private String street;
 
     // column name city
@@ -41,6 +43,7 @@ public class Invoice implements Serializable {
     @Column(name = "city")
     @NotNull(message= "City cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for city.")
     private String city;
 
     // column name state
@@ -48,6 +51,7 @@ public class Invoice implements Serializable {
     @Column(name = "state")
     @NotNull(message= "State cannot be null")
     @Size(max = 20, message = "Cannot be more than 20 characters")
+    @NotEmpty(message = "You must supply a value for state.")
     private String state;
 
     // column name zipcode
@@ -55,6 +59,7 @@ public class Invoice implements Serializable {
     @Column(name = "zipcode")
     @NotNull(message= "Zipcode cannot be null")
     @Size(max = 10, message = "Cannot be more than 10 characters")
+    @NotEmpty(message = "You must supply a value for zipcode.")
     private String zipcode;
 
     //column name item_type
@@ -62,12 +67,14 @@ public class Invoice implements Serializable {
     @Column(name = "item_type")
     @NotNull(message= "itemType cannot be null")
     @Size(max = 50, message = "Cannot be more than 50 characters")
+    @NotEmpty(message = "You must supply a value for itemType.")
     private String itemType;
 
     //column name item_id
     //not null, links to game console or t_shirt id
     @Column(name = "item_id")
     @NotNull(message= "Item ID cannot be null")
+    @NotEmpty(message = "You must supply a value for itemId.")
     private int itemId;
 
     //column name unit_price
@@ -75,18 +82,21 @@ public class Invoice implements Serializable {
     @Column(name="unit_price")
     @NotNull(message= "Unit Price cannot be null")
     @Digits(integer = 6, fraction = 2, message = "Unit price has to no more than 8 digits long, and up 2 decimal places")
+    @NotEmpty(message = "You must supply a value for unitPrice.")
     private BigDecimal unitPrice;
 
     // column name quantity
     //not null
     @Column(name = "quantity")
     @NotNull(message= "Quantity cannot be null")
+    @NotEmpty(message = "You must supply a value for quantity.")
     private int quantity;
 
     //column name subtotal
     //not null, 8 total, 2 after decimal
     @Column(name = "subtotal")
     @NotNull(message= "Subtotal cannot be null")
+    @NotEmpty(message = "You must supply a value for subtotal.")
     private BigDecimal subtotal;
 
     //not null, 8 total, 2 after decimal
@@ -95,6 +105,7 @@ public class Invoice implements Serializable {
     @NotNull(message= "Tax cannot be null")
     @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
     @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
+    @NotEmpty(message = "You must supply a value for tax.")
     private BigDecimal tax;
 
     //column name processing_fee
@@ -103,6 +114,7 @@ public class Invoice implements Serializable {
     @NotNull(message= "Processing Fee cannot be null")
     @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
     @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
+    @NotEmpty(message = "You must supply a value for processing.")
     private BigDecimal processingFee;
 
     //not null, 8 total, 2 after decimal
@@ -110,6 +122,8 @@ public class Invoice implements Serializable {
     @NotNull(message= "Total cannot be null")
     @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
     @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
+    @NotEmpty(message = "You must supply a value for total.")
+    @NotEmpty(message = "You must supply a value for total.")
     private BigDecimal total;
 
     public int getId() {
