@@ -104,7 +104,7 @@ public class ServiceLayer {
         if(stateTax.isPresent() == false){
             throw new IllegalArgumentException("Invalid State");
         }
-        invoice.setTax(invoice.getSubtotal().multiply(stateTax.get().getRate()));
+        invoice.setTax(invoice.getSubtotal().multiply(stateTax.get().getRate()).stripTrailingZeros());
 
         BigDecimal total = subtotal.add(invoice.getProcessingFee().add(invoice.getTax()));
         invoice.setTotal(total.setScale(2, RoundingMode.HALF_EVEN));

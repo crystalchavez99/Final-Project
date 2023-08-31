@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface InvoiceRepository extends JpaRepository <Invoice, Integer> {
+public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     List<Invoice> findByName(String name);
 }

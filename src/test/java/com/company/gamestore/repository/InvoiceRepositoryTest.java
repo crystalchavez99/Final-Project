@@ -1,65 +1,133 @@
 package com.company.gamestore.repository;
 
-import com.company.gamestore.model.Game;
-import com.company.gamestore.model.Invoice;
+import com.company.gamestore.model.*;
+import com.company.gamestore.service.ServiceLayer;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class InvoiceRepositoryTest {
     @Autowired
     private InvoiceRepository invoiceRepository;
-    private GameRepository gameRepository;
+
+    @Autowired
+    TaxRepository taxRepository;
+
+    @Autowired
+    FeeRepository feeRepository;
+
+    @Autowired
+    TShirtRepository tShirtRepository;
+
+    @Autowired
+    ServiceLayer serviceLayer;
+
+    private Fee fee;
+
+    private Tax tax;
+
+    private TShirt tShirt;
 
     private Invoice invoice;
-    private Game game;
+//    private GameRepository gameRepository;
+//
+//    private Invoice invoice;
+//    private Game game;
 
     @BeforeEach
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         invoiceRepository.deleteAll();
-        gameRepository.deleteAll();;
+        taxRepository.deleteAll();
+        feeRepository.deleteAll();
+        tShirtRepository.deleteAll();
+        serviceLayer.deleteAll();
 
-        game = new Game();
-        BigDecimal gameDecimal = new BigDecimal(24.99);
-        MathContext mc = new MathContext(4);
-        game.setTitle("Super Monkey Ball");
-        game.setEsrbRating("Everyone");
-        game.setDescription("Call your friends and warn your neighbors, it's time to have a ball! Go bananas with 90+ stages, multi-player madness, and 7 cool ways to play! Equal parts \"party\" and \"game\", Super Monkey Ball could be the most \"well-rounded\" game you've ever played!");
-        game.setPrice(gameDecimal.round(mc));
-        game.setStudio("Amusement Vision");
-        game.setQuantity(5);
-        game = gameRepository.save(game);
+        fee = new Fee();
+        fee.setProductType("tshirt");
+        fee.setFee(BigDecimal.valueOf(.99));
+
+        feeRepository.save(fee);
+
+        tax = new Tax();
+        tax.setState("OR");
+        tax.setRate(BigDecimal.valueOf(.07));
+
+        taxRepository.save(tax);
+
+        tShirt = new TShirt();
+        tShirt.setColor("red");
+        tShirt.setDescription("coca-cola shirt");
+        tShirt.setPrice(BigDecimal.valueOf(12L, 2));
+        tShirt.setSize("medium");
+        tShirt.setQuantity(100);
+
+        tShirtRepository.save(tShirt);
 
         invoice = new Invoice();
-        invoice.setName("John Doe");
-        invoice.setStreet("1234 Street Name");
-        invoice.setCity("City Name");
-        invoice.setState("California");
-        invoice.setZipcode("00000");
-        invoice.setItemType("game");
-        invoice.setItemId(game.getId());
-        invoice.setUnitPrice(game.getPrice());
-        invoice.setQuantity(5);
-        //invoice.setSubtotal();
-        //invoice.setTax();
-        //invoice.setProcessingFee();
-        //invoice.setTotal();
-        invoice = invoiceRepository.save(invoice);
+        invoice.setName("Shawn Haven");
+        invoice.setStreet("420 Happy Ave");
+        invoice.setCity("Lakewood");
+        invoice.setState(tax.getState());
+        invoice.setZipcode("91387");
+        invoice.setItemType("tshirt");
+        invoice.setItemId(tShirt.getId());
+        invoice.setQuantity(10);
+
+        invoice = serviceLayer.saveInvoice(invoice);
+        invoice.setTax(invoice.getTax().setScale(2, RoundingMode.HALF_EVEN));
     }
+
+//    @BeforeEach
+//    public void createInvoice() throws Exception{
+//        invoiceRepository.deleteAll();
+//        gameRepository.deleteAll();;
+//
+//        game = new Game();
+//        BigDecimal gameDecimal = new BigDecimal(24.99);
+//        MathContext mc = new MathContext(4);
+//        game.setTitle("Super Monkey Ball");
+//        game.setEsrbRating("Everyone");
+//        game.setDescription("Call your friends and warn your neighbors, it's time to have a ball! Go bananas with 90+ stages, multi-player madness, and 7 cool ways to play! Equal parts \"party\" and \"game\", Super Monkey Ball could be the most \"well-rounded\" game you've ever played!");
+//        game.setPrice(gameDecimal.round(mc));
+//        game.setStudio("Amusement Vision");
+//        game.setQuantity(5);
+//        game = gameRepository.save(game);
+//
+//        invoice = new Invoice();
+//        invoice.setName("John Doe");
+//        invoice.setStreet("1234 Street Name");
+//        invoice.setCity("City Name");
+//        invoice.setState("California");
+//        invoice.setZipcode("00000");
+//        invoice.setItemType("game");
+//        invoice.setItemId(game.getId());
+//        invoice.setUnitPrice(game.getPrice());
+//        invoice.setQuantity(5);
+//        //invoice.setSubtotal();
+//        //invoice.setTax();
+//        //invoice.setProcessingFee();
+//        //invoice.setTotal();
+//        invoice = invoiceRepository.save(invoice);
+//    }
     //create
     @Test
     void shouldCreateInvoice(){
-        Optional<Invoice> invoice2 = invoiceRepository.findById(invoice.getId());
-        assertEquals(invoice2.get(), invoice);
+        Optional<Invoice> invoiceREPO = invoiceRepository.findById(invoice.getId());
+        assertEquals(invoiceREPO.get(), invoice);
     }
     //read by id
     @Test
@@ -72,6 +140,7 @@ public class InvoiceRepositoryTest {
     @Test
     void shouldFindAllInvoices(){
         List<Invoice> invoices = invoiceRepository.findAll();
+        System.out.println(invoices.size() + "XXXXXXXXXx");
         assertEquals(1,invoices.size());
     }
 
