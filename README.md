@@ -2,7 +2,28 @@
 
 Submitted by: **Crystal Chavez and Adrian Castro**
 
-Project Description: ****
+Project Description: **A simple back-end API (via REST and GraphQL) inventory management web service for a video game store, developed using agile techniques in a group setting of 2 learners. We were for designing and documenting the API and implementing the controllers, service, layering, repository, Java data objects, and unit tests for the application based on the provided database structure.**
+
+Tools Used: Java, RESTful Web Services, JPA, Spring Boot, Spring MVC, Spring Initializr, MockMVC, Docker, DBeaver, AWS, Amazon RDS, CircleCI
+
+## Methodology 
+- Managed our work using GitHub Project
+- Estimated our work using story points
+- Used test-driven approach (red/green/refactor)
+- Used JUnit for unit and integration tests
+- Included a service layer
+- Unit test suit used mock objects where appropriate
+- Used JSR303 for input validation
+
+## User Stories
+Users should be able to:
+- Create, read, update, and delete game information.
+- Search for games by studio, ESRB rating, and title.
+- Create, read, update, and delete console information.
+- Search for consoles by manufacturer.
+- Create, read, update, and delete T-shirt information.
+- Search for games by color and size.
+- Purchase a specified quantity of products (games, consoles, T-shirts) and an invoice will be created that includes any taxes and processing fees.
 
 ## Project Delegation
 
@@ -18,6 +39,7 @@ Crystal:
 - Service Layer
 - GraphQL
 - OpenAPI Documentation
+- AWS Deployment
 
 Adrian:
 - Make Game, T-Shirt, Console, Invoice, Fee, and Tax models
@@ -73,9 +95,9 @@ REST API Controller Advice and Validation:
 
 Deployment:
 - [x] Project code has been synced to a GitHub repository.
-- [ ] Application has been deployed to AWS and is receiving requests and responding accordingly.
-- [ ] Application database has been deployed to Amazon RDS and is receiving requests and responding accordingly.
-- [ ] Project code has been deployed to a CircleCI CI/CD pipeline that includes a "build and test" job.
+- [x] Application has been deployed to AWS and is receiving requests and responding accordingly.
+- [x] Application database has been deployed to Amazon RDS and is receiving requests and responding accordingly.
+- [x] Project code has been deployed to a CircleCI CI/CD pipeline that includes a "build and test" job.
 
 ## Video Walkthrough
 
@@ -88,7 +110,11 @@ GIF created with LICEcap
 
 
 ## Notes
+One challenge we faced had to do with the delegation of responsibilities, as we originally had 3 members in our group. Our third group mate let us know that they were unable to complete their part of the project the day it was due, so we quickly had to split everything that was unaccounted for between us.
 
+Another challenge we faced was getting the invoice API set up, as it involved two other models, controllers, and a service layer. There was a lot of debugging involved and was the biggest part of the project.
+
+The last challenge we faced was getting the controller exception handler to account for both 422 and 404 errors, since having both would break all our tests. In the interest of saving time due to the first challenge above, we decided to only implement the 422 error handler.
 
 
 ## License
