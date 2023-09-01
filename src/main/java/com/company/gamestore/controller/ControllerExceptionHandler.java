@@ -19,8 +19,8 @@ import java.util.List;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<List<CustomErrorResponse>> recordValidationError(MethodArgumentNotValidException e){
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<List<CustomErrorResponse>> gameStore422Error(MethodArgumentNotValidException e){
         // binding result holds the validation errors
         BindingResult result = e.getBindingResult();
         // Validation error are stored in FieldError Objects
@@ -30,14 +30,14 @@ public class ControllerExceptionHandler {
         List<CustomErrorResponse> errorResponseList = new ArrayList<>();
 
         for(FieldError fieldError : fieldErrors) {
-            CustomErrorResponse errorResponse = new CustomErrorResponse(HttpStatus.NOT_FOUND.toString(), fieldError.getDefaultMessage());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), fieldError.getDefaultMessage());
             errorResponse.setTimestamp(LocalDateTime.now());
-            errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+            errorResponse.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
             errorResponseList.add(errorResponse);
         }
 
         // create and return ResponseEntity
-        ResponseEntity<List<CustomErrorResponse>> responseEntity = new ResponseEntity<>(errorResponseList, HttpStatus.NOT_FOUND);
+        ResponseEntity<List<CustomErrorResponse>> responseEntity = new ResponseEntity<>(errorResponseList, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
 
     }

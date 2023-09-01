@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(GameController.class)
@@ -116,17 +117,14 @@ public class GameControllerTest {
 
     @Test
     void shouldReturn422ErrorCode() throws Exception {
-        game = new Game();
+        Game game2 = new Game();
 
-        BigDecimal decimal = new BigDecimal("24.99");
-        MathContext mc = new MathContext(4);
+        String input = mapper.writeValueAsString(game2);
 
-        game.setTitle("Super Monkey Ball");
-        game.setEsrbRating("Everyone");
-        game.setDescription("Call your friends and warn your neighbors, it's time to have a ball! Go bananas with 90+ stages, multi-player madness, and 7 cool ways to play! Equal parts \"party\" and \"game\", Super Monkey Ball could be the most \"well-rounded\" game you've ever played!");
-        game.setPrice(decimal.round(mc));
-        game.setStudio("Amusement Vision");
-        game.setQuantity(5);
-
+        mockMvc.perform(post("/games")
+                        .content(input)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 }

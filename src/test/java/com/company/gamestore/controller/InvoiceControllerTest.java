@@ -1,9 +1,6 @@
 package com.company.gamestore.controller;
 
-import com.company.gamestore.model.Fee;
-import com.company.gamestore.model.Invoice;
-import com.company.gamestore.model.TShirt;
-import com.company.gamestore.model.Tax;
+import com.company.gamestore.model.*;
 import com.company.gamestore.repository.FeeRepository;
 import com.company.gamestore.repository.TShirtRepository;
 import com.company.gamestore.repository.TaxRepository;
@@ -109,5 +106,18 @@ class InvoiceControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
 
+    }
+
+    @Test
+    void shouldReturn422ErrorCode() throws Exception {
+        Invoice invoice2 = new Invoice();
+
+        String input = mapper.writeValueAsString(invoice2);
+
+        mockMvc.perform(post("/invoices")
+                        .content(input)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 }
