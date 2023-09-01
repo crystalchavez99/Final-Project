@@ -84,7 +84,7 @@ public class GameControllerTest {
                         .content(inputJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isNoContent());
+                .andExpect(status().isCreated());
     }
 
     @Test

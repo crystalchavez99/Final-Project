@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Console;
 import com.company.gamestore.model.TShirt;
 import com.company.gamestore.repository.TShirtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,49 +12,54 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tshirts")
 public class TShirtController {
 
     @Autowired
     private TShirtRepository tShirtRepository;
 
-    @PostMapping
+    //get all tshirts
+    @GetMapping("/tshirts")
+    public List<TShirt> getAllTShirts() {
+        return tShirtRepository.findAll();
+    }
+
+    //create tshirt
+    @PostMapping("/tshirts")
     @ResponseStatus(HttpStatus.CREATED)
     public TShirt createTShirt(@RequestBody @Valid TShirt tShirt) {
         return tShirtRepository.save(tShirt);
     }
 
-    @GetMapping("/{id}")
+    //read tshirt by id
+    @GetMapping("tshirts/{id}")
     public TShirt getTShirtById(@PathVariable int id) {
-        Optional<TShirt> tShirt = tShirtRepository.findById(id);
-        return tShirt.orElse(null);
-    }
-
-    @GetMapping
-    public List<TShirt> getAllTShirts() {
-        return tShirtRepository.findAll();
-    }
-
-    @PutMapping("/{id}")
-    public TShirt updateTShirt(@PathVariable int id, @RequestBody TShirt tShirt) {
-        if (tShirtRepository.existsById(id)) {
-            tShirt.setId(id);
-            return tShirtRepository.save(tShirt);
+        Optional<TShirt> returnVal = tShirtRepository.findById(id);
+        if (returnVal.isPresent()) {
+            return returnVal.get();
         }
         return null;
     }
 
-    @DeleteMapping("/{id}")
+    //update tshirt
+    @PutMapping("/tshirts")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TShirt updateConsole(@RequestBody @Valid TShirt tShirt) {
+        return tShirtRepository.save(tShirt);
+    }
+
+    //delete tshirt
+    @DeleteMapping("tshirts/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTShirt(@PathVariable int id) {
         tShirtRepository.deleteById(id);
     }
 
-    @GetMapping("/color/{color}")
+    @GetMapping("tshirts/color/{color}")
     public List<TShirt> getTShirtsByColor(@PathVariable String color) {
         return tShirtRepository.findByColor(color);
     }
 
-    @GetMapping("/size/{size}")
+    @GetMapping("tshirts/size/{size}")
     public List<TShirt> getTShirtsBySize(@PathVariable String size) {
         return tShirtRepository.findBySize(size);
     }
