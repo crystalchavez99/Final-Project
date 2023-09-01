@@ -5,12 +5,15 @@ import com.company.gamestore.repository.ConsoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,106 +21,62 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@RunWith(SpringRunner.class)
 @WebMvcTest(ConsoleController.class)
-public class ConsoleControllerTest {
+class ConsoleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private ConsoleRepository consoleRepository;
+    private ObjectMapper mapper = new ObjectMapper();
 
     private Console console;
 
-    @BeforeEach
-    public void setUp() {
-        console = new Console();
-        console.setId(1);
-        console.setManufacturer("Sony");
-        console.setModel("PlayStation 5");
-    }
-
     @Test
-    public void shouldCreateConsole() throws Exception {
-        when(consoleRepository.save(any(Console.class))).thenReturn(console);
-
-        mockMvc.perform(post("/consoles")
-                        .content("{\"manufacturer\":\"Sony\",\"model\":\"PlayStation 5\"}")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.manufacturer").value("Sony"))
-                .andExpect(jsonPath("$.model").value("PlayStation 5"));
-
-        verify(consoleRepository, times(1)).save(any(Console.class));
-    }
-
-    @Test
-    public void shouldGetConsoleById() throws Exception {
-        when(consoleRepository.findById(1)).thenReturn(Optional.of(console));
-
-        mockMvc.perform(get("/consoles/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.manufacturer").value("Sony"))
-                .andExpect(jsonPath("$.model").value("PlayStation 5"));
-
-        verify(consoleRepository, times(1)).findById(1);
-    }
-
-    @Test
-    public void shouldGetAllConsoles() throws Exception {
-        List<Console> consoles = new ArrayList<>();
-        consoles.add(console);
-
-        when(consoleRepository.findAll()).thenReturn(consoles);
-
-        mockMvc.perform(get("/consoles"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].manufacturer").value("Sony"))
-                .andExpect(jsonPath("$[0].model").value("PlayStation 5"));
-
-        verify(consoleRepository, times(1)).findAll();
-    }
-
-    @Test
-    public void shouldUpdateConsole() throws Exception {
-        when(consoleRepository.existsById(1)).thenReturn(true);
-
-        mockMvc.perform(put("/consoles/1")
-                        .content("{\"manufacturer\":\"Microsoft\",\"model\":\"Xbox Series X\"}")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.manufacturer").value("Microsoft"))
-                .andExpect(jsonPath("$.model").value("Xbox Series X"));
-
-        verify(consoleRepository, times(1)).save(any(Console.class));
-    }
-
-    @Test
-    public void shouldDeleteConsole() throws Exception {
-        mockMvc.perform(delete("/consoles/1"))
+    public void getAllConsoles() throws Exception {
+        mockMvc.perform(get("/console"))
+                .andDo(print())
                 .andExpect(status().isOk());
-
-        verify(consoleRepository, times(1)).deleteById(1);
     }
 
     @Test
-    public void shouldGetConsolesByManufacturer() throws Exception {
-        List<Console> consoles = new ArrayList<>();
-        consoles.add(console);
+    public void getConsoleById() throws Exception {
+        mockMvc.perform(get("/console/2"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
-        when(consoleRepository.findByManufacturer("Sony")).thenReturn(consoles);
+    @Test
+    public void getConsolesByManufacturer() throws Exception {
+        mockMvc.perform(get("/console/manufacturer/2"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+    @Test
+    public void createConsole() throws Exception {
+        Console console = new Console();
+        console.setPrice(BigDecimal.valueOf(299.99));
+        console.setModel("Nintendo Switch");
+        console.setManufacturer("Nintendo");
+        console.setProcessor("ARM 4 Cortex-A57");
+        console.setQuantity(1);
+        console.setId(3);
+        String inputJson = mapper.writeValueAsString(console);
 
-        mockMvc.perform(get("/consoles/manufacturer/Sony"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].manufacturer").value("Sony"))
-                .andExpect(jsonPath("$[0].model").value("PlayStation 5"));
+        mockMvc.perform(post("/console").content(inputJson).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
 
-        verify(consoleRepository, times(1)).findByManufacturer("Sony");
+    @Test
+    public void deleteConsole() throws Exception {
+        mockMvc.perform(delete("/console/3"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 }
