@@ -90,7 +90,7 @@ REST API Controller Advice and Validation:
 - [x] JSR 303 validations match database constraints and messages are clear and concise.
 - [x] Implementation utilizes the ResponseEntity pattern presented in class.
 - [x] Controller Advice returns 422 status codes where appropriate.
-- [ ] Controller Advice returns 404 status codes where appropriate.
+- [x] Controller Advice returns 404 status codes where appropriate.
 - [ ] Controller Advice handles all possible exceptions thrown by Controller, Repository, and Service Layer code.
 
 Deployment:
@@ -101,9 +101,9 @@ Deployment:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented required features, including JSR303 tests on insomnia:
+Here's a walkthrough of JSR303 tests for 404 errors, since there are no tests for it in the code:
 
-👉🏿<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+👉🏿<img src='[http://i.imgur.com/link/to/your/gif/file.gif](https://github.com/crystalchavez99/Final-Project/blob/main/jsr303_walkthrough.gif)' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with LICEcap
