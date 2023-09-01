@@ -88,7 +88,7 @@ REST API Controller Advice and Validation:
 - [x] Implementation utilizes the ResponseEntity pattern presented in class.
 - [x] Controller Advice returns 422 status codes where appropriate.
 - [x] Controller Advice returns 404 status codes where appropriate.
-- [ ] Controller Advice handles all possible exceptions thrown by Controller, Repository, and Service Layer code.
+- [x] Controller Advice handles all possible exceptions thrown by Controller, Repository, and Service Layer code.
 
 Deployment:
 - [x] Project code has been synced to a GitHub repository.
