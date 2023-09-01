@@ -103,7 +103,7 @@ Deployment:
 
 Here's a walkthrough of JSR303 tests for 404 errors, since there are no tests for it in the code:
 
-👉🏿<img src='[http://i.imgur.com/link/to/your/gif/file.gif](https://github.com/crystalchavez99/Final-Project/blob/main/jsr303_walkthrough.gif)' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/link/to/your/gif/file.gif](https://github.com/crystalchavez99/Final-Project/blob/main/jsr303_walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with LICEcap
