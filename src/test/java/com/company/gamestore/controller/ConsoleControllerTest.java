@@ -1,6 +1,7 @@
 package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Console;
+import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.ConsoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,5 +79,18 @@ class ConsoleControllerTest {
         mockMvc.perform(delete("/console/3"))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void shouldReturn422ErrorCode() throws Exception {
+        Console console2 = new Console();
+
+        String input = mapper.writeValueAsString(console2);
+
+        mockMvc.perform(post("/console")
+                        .content(input)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 }
