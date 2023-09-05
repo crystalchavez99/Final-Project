@@ -33,11 +33,10 @@ Crystal:
 - Console controller, repository, controller tests, and repository tests
 - Adding validation annotations in models
 - Fee and Tax controller
-- Invoice View Model
-- Service Layer
-- GraphQL
+- Invoice View Model and Service Layer
+- GraphQL Controller
 - OpenAPI Documentation
-- AWS Deployment
+- AWS, Amazon RDS, and CircleCI Deployment
 
 Adrian:
 - Make Game, T-Shirt, Console, Invoice, Fee, and Tax models
