@@ -14,18 +14,16 @@ import java.util.Objects;
 @Table(name = "console")
 public class Console implements Serializable {
 
-
     @Id
     @Column(name = "console_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull(message = "Console_id cannot be null.")
     private Integer consoleId;
 
-    @NotNull(message = "Model cannot be null.")
+    @NotEmpty(message = "Model cannot be empty.")
     @Size(max = 50, message = "Model can not be larger than 50 characters.")
     private String model;
 
-    @NotNull(message = "Manufacturer cannot be null.")
+    @NotEmpty(message = "Manufacturer cannot be empty.")
     @Size(max = 50, message = "Manufacturer can not be larger than 50 characters.")
     private String manufacturer;
 

@@ -14,98 +14,70 @@ import java.util.Objects;
 @Table(name = "invoice")
 public class Invoice implements Serializable {
 
-    // column name id
-    // not null
     @Id
     @Column(name = "invoice_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private int id;
 
-    // column name name
-    //not null, 50 characters
     @Column(name  = "name")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for name.")
     private String name;
 
-    // column name street
-    //not null, 100 char
     @Column(name = "street")
     @Size(max = 100, message = "Cannot be more than 100 characters")
     @NotEmpty(message = "You must supply a value for street.")
     private String street;
 
-    // column name city
-    //not null, 50 char
     @Column(name = "city")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for city.")
     private String city;
 
-    // column name state
-    //not null, 20 char
     @Column(name = "state")
     @Size(max = 20, message = "Cannot be more than 20 characters")
     @NotEmpty(message = "You must supply a value for state.")
     private String state;
 
-    // column name zipcode
-    //not null, 10 char
     @Column(name = "zipcode")
     @Size(max = 10, message = "Cannot be more than 10 characters")
     @NotEmpty(message = "You must supply a value for zipcode.")
     private String zipcode;
 
-    //column name item_type
-    //not null, 50 char
     @Column(name = "item_type")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for itemType.")
     private String itemType;
 
-    //column name item_id
-    //not null, links to game console or t_shirt id
     @Column(name = "item_id")
     @NotNull(message= "Item ID cannot be null")
     private int itemId;
 
-    //column name unit_price
-    //not null, 8 total, 2 after decimal
     @Column(name="unit_price")
     @NotNull(message= "Unit Price cannot be null")
     @Digits(integer = 6, fraction = 2, message = "Unit price has to no more than 8 digits long, and up 2 decimal places")
     private BigDecimal unitPrice;
 
-    // column name quantity
-    //not null
     @Column(name = "quantity")
     @NotNull(message= "Quantity cannot be null")
     private int quantity;
 
-    //column name subtotal
-    //not null, 8 total, 2 after decimal
     @Column(name = "subtotal")
     @NotNull(message= "Subtotal cannot be null")
     private BigDecimal subtotal;
 
-    //not null, 8 total, 2 after decimal
-    //based off rate from tax model
     @Column(name = "tax")
     @NotNull(message= "Tax cannot be null")
     @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
     @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
     private BigDecimal tax;
 
-    //column name processing_fee
-    //not null, 8 total, 2 after decimal
     @Column(name = "processing_fee")
     @NotNull(message= "Processing Fee cannot be null")
     @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")
     @DecimalMax(value = "999999.99", inclusive = true, message = "Value must be less than {value}")
     private BigDecimal processingFee;
 
-    //not null, 8 total, 2 after decimal
     @Column(name = "total")
     @NotNull(message= "Total cannot be null")
     @DecimalMin(value = "0.01", inclusive = true, message = "Price cant be null and must be at least 0.01 cents")

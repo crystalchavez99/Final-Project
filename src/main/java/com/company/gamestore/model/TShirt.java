@@ -23,27 +23,22 @@ public class TShirt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //not null, 20 char
     @Size(max = 20, message = "Cannot be more than 20 characters")
     @NotEmpty(message = "You must supply a value for size.")
     private String size;
 
-    //not null, 20 char
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for color.")
     private String color;
 
-    //not null, 255 char
     @Size(max = 255, message = "Cannot be more than 255 characters")
     @NotEmpty(message = "You must supply a value for description.")
     private String description;
 
-    //not null, 5 total 2 after decimal
     @NotNull(message= "price cannot be null")
     @Digits(integer = 3, fraction = 2, message = "price has to no more than 5 digits long, and up 2 decimal places")
     private BigDecimal price;
 
-    //not null
     @NotNull(message= "quantity cannot be null")
     private int quantity;
 

@@ -1,7 +1,7 @@
 package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Console;
-import com.company.gamestore.model.Invoice;
+import com.company.gamestore.model.TShirt;
 import com.company.gamestore.repository.ConsoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +39,16 @@ class ConsoleControllerTest {
 
     private Console console;
 
+    @BeforeEach
+    public void setUp() {
+        console = new Console();
+        console.setPrice(BigDecimal.valueOf(299.99));
+        console.setModel("Nintendo Switch");
+        console.setManufacturer("Nintendo");
+        console.setProcessor("ARM 4 Cortex-A57");
+        console.setQuantity(1);
+    }
+
     @Test
     public void getAllConsoles() throws Exception {
         mockMvc.perform(get("/console"))
@@ -60,16 +71,23 @@ class ConsoleControllerTest {
     }
     @Test
     public void createConsole() throws Exception {
-        Console console = new Console();
-        console.setPrice(BigDecimal.valueOf(299.99));
-        console.setModel("Nintendo Switch");
-        console.setManufacturer("Nintendo");
-        console.setProcessor("ARM 4 Cortex-A57");
-        console.setQuantity(1);
-        console.setId(3);
+        String input = mapper.writeValueAsString(console);
+
+        mockMvc.perform(post("/console")
+                        .content(input)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldUpdateConsole() throws Exception {
+        console.setManufacturer("Sega");
         String inputJson = mapper.writeValueAsString(console);
 
-        mockMvc.perform(post("/console").content(inputJson).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(put("/console")
+                        .content(inputJson)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }

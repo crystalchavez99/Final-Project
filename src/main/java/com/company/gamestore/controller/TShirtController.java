@@ -30,7 +30,7 @@ public class TShirtController {
         return tShirtRepository.save(tShirt);
     }
 
-    //read tshirt by id
+    //get tshirt by id
     @GetMapping("tshirts/{id}")
     public TShirt getTShirtById(@PathVariable int id) {
         Optional<TShirt> returnVal = tShirtRepository.findById(id);
@@ -47,18 +47,20 @@ public class TShirtController {
         return tShirtRepository.save(tShirt);
     }
 
-    //delete tshirt
+    //delete tshirt by id
     @DeleteMapping("tshirts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTShirt(@PathVariable int id) {
         tShirtRepository.deleteById(id);
     }
 
+    //get tshirt by color
     @GetMapping("tshirts/color/{color}")
     public List<TShirt> getTShirtsByColor(@PathVariable String color) {
         return tShirtRepository.findByColor(color);
     }
 
+    //get tshirt by size
     @GetMapping("tshirts/size/{size}")
     public List<TShirt> getTShirtsBySize(@PathVariable String size) {
         return tShirtRepository.findBySize(size);

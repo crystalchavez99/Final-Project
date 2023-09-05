@@ -43,10 +43,6 @@ public class InvoiceRepositoryTest {
     private TShirt tShirt;
 
     private Invoice invoice;
-//    private GameRepository gameRepository;
-//
-//    private Invoice invoice;
-//    private Game game;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -91,38 +87,6 @@ public class InvoiceRepositoryTest {
         invoice.setTax(invoice.getTax().setScale(2, RoundingMode.HALF_EVEN));
     }
 
-//    @BeforeEach
-//    public void createInvoice() throws Exception{
-//        invoiceRepository.deleteAll();
-//        gameRepository.deleteAll();;
-//
-//        game = new Game();
-//        BigDecimal gameDecimal = new BigDecimal(24.99);
-//        MathContext mc = new MathContext(4);
-//        game.setTitle("Super Monkey Ball");
-//        game.setEsrbRating("Everyone");
-//        game.setDescription("Call your friends and warn your neighbors, it's time to have a ball! Go bananas with 90+ stages, multi-player madness, and 7 cool ways to play! Equal parts \"party\" and \"game\", Super Monkey Ball could be the most \"well-rounded\" game you've ever played!");
-//        game.setPrice(gameDecimal.round(mc));
-//        game.setStudio("Amusement Vision");
-//        game.setQuantity(5);
-//        game = gameRepository.save(game);
-//
-//        invoice = new Invoice();
-//        invoice.setName("John Doe");
-//        invoice.setStreet("1234 Street Name");
-//        invoice.setCity("City Name");
-//        invoice.setState("California");
-//        invoice.setZipcode("00000");
-//        invoice.setItemType("game");
-//        invoice.setItemId(game.getId());
-//        invoice.setUnitPrice(game.getPrice());
-//        invoice.setQuantity(5);
-//        //invoice.setSubtotal();
-//        //invoice.setTax();
-//        //invoice.setProcessingFee();
-//        //invoice.setTotal();
-//        invoice = invoiceRepository.save(invoice);
-//    }
     //create
     @Test
     void shouldCreateInvoice(){

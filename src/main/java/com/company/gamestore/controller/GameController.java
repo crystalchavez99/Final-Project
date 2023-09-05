@@ -16,6 +16,7 @@ public class GameController {
     @Autowired
     GameRepository gameRepository;
 
+    //get all games
     @GetMapping("/games")
     public List<Game> getAllGames() {
         return gameRepository.findAll();
@@ -28,7 +29,7 @@ public class GameController {
         return gameRepository.save(game);
     }
 
-    // read game by id
+    //get game by id
     @GetMapping("/games/{id}")
     public Game getGameById(@PathVariable int id) {
         Optional<Game> returnVal = gameRepository.findById(id);
@@ -52,19 +53,19 @@ public class GameController {
         gameRepository.deleteById(id);
     }
 
-    //read game by studio
+    //get game by studio
     @GetMapping("/games/studio/{studio}")
     public List<Game> getGamesByStudio(@PathVariable String studio) {
         return gameRepository.findByStudio(studio);
     }
 
-    //read game by esrb rating
+    //get game by esrb rating
     @GetMapping("/games/rating/{esrbRating}")
     public List<Game> getGamesByEsrbRating(@PathVariable String esrbRating) {
         return gameRepository.findByEsrbRating(esrbRating);
     }
 
-    //read game by title
+    //get game by title
     @GetMapping("/games/title/{title}")
     public List<Game> getGamesByTitle(@PathVariable String title) {
         return gameRepository.findByTitle(title);

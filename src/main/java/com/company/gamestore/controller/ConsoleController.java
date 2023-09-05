@@ -15,40 +15,42 @@ public class ConsoleController {
     @Autowired
     ConsoleRepository consoleRepo;
 
+    //create console
     @PostMapping(path = "/console")
     @ResponseStatus(HttpStatus.CREATED)
     public Console createConsole(@RequestBody @Valid Console console) {
         return consoleRepo.save(console);
     }
 
-
+    //update console
     @PutMapping("/console")
     @ResponseStatus(HttpStatus.CREATED)
     public Console updateConsole(@RequestBody @Valid Console console) {
         return consoleRepo.save(console);
     }
 
-
+    //delete console
     @DeleteMapping("/console/{consoleId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteConsole(@PathVariable Integer consoleId) {
         consoleRepo.deleteById(consoleId);
     }
 
-
+    //get all consoles
     @GetMapping("/console")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getAllConsoles() {
         return consoleRepo.findAll();
     }
 
-
+    //get console by id
     @GetMapping("/console/{consoleId}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Console> findConsoleById(@PathVariable Integer consoleId) {
         return consoleRepo.findById(consoleId);
     }
 
+    //get console by manufacturer
     @GetMapping("/console/manufacturer/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> findConsolesByManufacturer(@PathVariable String manufacturer) {

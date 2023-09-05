@@ -15,22 +15,16 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "tax")
 public class Tax implements Serializable {
-    //2 characters only
-    //primary key
+
     @Id
     @Column(name = "state")
     @Size(max = 2, message = "State should only be 2 characters.")
     private String state;
 
-    //not null
-    //8 characters total, 2 after the decimal point
-    //000000.00
     @NotNull(message = "Rate can not be null.")
     @DecimalMin(value = "0.00", inclusive = true, message = "Tax can not be null and must be over 0.00")
     @Digits(integer = 5, fraction = 3, message = "Tax can only be up to 8 numbers long with 3 numbers after the decimal.")
     private BigDecimal rate;
-
-
 
     public String getState() {
         return state;

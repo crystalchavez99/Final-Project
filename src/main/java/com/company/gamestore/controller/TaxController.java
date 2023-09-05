@@ -16,34 +16,35 @@ public class TaxController {
     @Autowired
     TaxRepository taxRepository;
 
+    //create tax
     @PostMapping("/taxes")
     @ResponseStatus(HttpStatus.CREATED)
     public Tax createTax(@RequestBody @Valid Tax tax) {
         return taxRepository.save(tax);
     }
 
-
+    //update tax
     @PutMapping("/taxes")
     @ResponseStatus(HttpStatus.OK)
     public Tax updateTax(@RequestBody @Valid Tax tax) {
         return taxRepository.save(tax);
     }
 
-
+    //get tax by id
     @GetMapping("/taxes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Tax> getTaxById(@PathVariable String id) {
         return taxRepository.findById(id);
     }
 
-
+    //get all tax rates
     @GetMapping("/taxes")
     @ResponseStatus(HttpStatus.OK)
     public List<Tax> getAllTaxRates() {
         return taxRepository.findAll();
     }
 
-
+    //delete tax by id
     @DeleteMapping("/taxes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTax(@PathVariable String id) {

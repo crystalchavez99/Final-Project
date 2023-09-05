@@ -16,28 +16,30 @@ import java.util.Optional;
 @RestController
 public class InvoiceController {
 
-
-
     @Autowired
     ServiceLayer invoiceServiceLayer;
 
+    //get all invoices
     @GetMapping("/invoices")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Invoice> getAllInvoices() {
         return invoiceServiceLayer.findAll();
     }
 
+    //get invoice by id
     @GetMapping("/invoices/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Invoice getInvoiceById(@PathVariable int id) {
         return invoiceServiceLayer.findById(id);
     }
 
+    //get invoice by name
     @GetMapping("/invoices/names/{name}")
     public List<Invoice> getInvoiceByName(@PathVariable String name) {
         return invoiceServiceLayer.findByName(name);
     }
 
+    //create invoice
     @PostMapping("/invoices")
     @ResponseStatus(HttpStatus.CREATED)
     public Invoice createInvoice(@RequestBody @Valid InvoiceViewModel invoiceViewModel) {

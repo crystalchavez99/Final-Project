@@ -19,38 +19,31 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //not null, 50 char
     @Column(name = "title")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for title.")
     private String title;
 
-    //table name esrb_rating
-    //not null, 50 char
     @Column(name = "esrb_rating")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for esrbRating.")
     private String esrbRating;
 
-    //not null, 255 char
     @Column(name = "description")
     @Size(max = 255, message = "Cannot be more than 255 characters")
     @NotEmpty(message = "You must supply a value for description.")
     private String description;
 
-    //not null, 5 total, 2 after decimal
     @Column(name = "price")
     @NotNull(message= "price cannot be null")
     @Digits(integer = 3, fraction = 2, message = "price has to no more than 5 digits long, and up 2 decimal places")
     private BigDecimal price;
 
-    //not null, 50 char
     @Column(name = "studio")
     @Size(max = 50, message = "Cannot be more than 50 characters")
     @NotEmpty(message = "You must supply a value for studio.")
     private String studio;
 
-    //can be null? ask abt this one
     @Column(name = "quantity")
     private int quantity;
 
