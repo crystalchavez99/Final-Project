@@ -2,7 +2,7 @@
 
 Submitted by: **Crystal Chavez and Adrian Castro**
 
-Project Description: **A simple back-end API (via REST and GraphQL) inventory management web service for a video game store, developed using agile techniques in a group setting of 2 learners. We were for designing and documenting the API and implementing the controllers, service, layering, repository, Java data objects, and unit tests for the application based on the provided database structure.**
+Project Description: **A simple back-end API (via REST and GraphQL) inventory management web service for a video game store, developed using agile techniques in a group setting of 2 learners. We were responsible for designing and documenting the API and implementing the controllers, service, layering, repository, Java data objects, and unit tests for the application based on the provided database structure.**
 
 Tools Used: Java, RESTful Web Services, JPA, Spring Boot, Spring MVC, Spring Initializr, MockMVC, Docker, DBeaver, AWS, Amazon RDS, CircleCI
 
@@ -28,13 +28,11 @@ Users should be able to:
 ## Project Delegation
 
 Crystal:
-- Creating Github Repository
-- Creating Github Project
+- Creating Github Repository and Github Project
 - Invoice controller, repository, controller tests, and repository tests
 - Console controller, repository, controller tests, and repository tests
 - Adding validation annotations in models
-- Fee controller
-- Tax controller
+- Fee and Tax controller
 - Invoice View Model
 - Service Layer
 - GraphQL
@@ -49,7 +47,6 @@ Adrian:
 - Adding validation annotations to all controllers
 - CustomErrorHandler and ControllerExceptionHandler for 422 and 404 errors
 - README
-- Recording JSR303 Tests
 
 ## Required Features
 
@@ -90,8 +87,8 @@ REST API Controller Advice and Validation:
 - [x] JSR 303 validations match database constraints and messages are clear and concise.
 - [x] Implementation utilizes the ResponseEntity pattern presented in class.
 - [x] Controller Advice returns 422 status codes where appropriate.
-- [ ] Controller Advice returns 404 status codes where appropriate.
-- [ ] Controller Advice handles all possible exceptions thrown by Controller, Repository, and Service Layer code.
+- [x] Controller Advice returns 404 status codes where appropriate.
+- [x] Controller Advice handles all possible exceptions thrown by Controller, Repository, and Service Layer code.
 
 Deployment:
 - [x] Project code has been synced to a GitHub repository.
@@ -101,9 +98,9 @@ Deployment:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented required features, including JSR303 tests on insomnia:
+Here's a walkthrough of JSR303 tests for 404 errors, since there are no tests for it in the code:
 
-👉🏿<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/crystalchavez99/Final-Project/blob/main/jsr303_walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with LICEcap
